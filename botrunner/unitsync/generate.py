@@ -131,7 +131,7 @@ f.write(classBase)
 
 for (name, returnType, args) in functions:
 	if returnType:
-		text = 'unitsync.%s.restype = %s' % (name, returnType)
+		text = 'self.unitsync.%s.restype = %s' % (name, returnType)
 		f.write('\n\t\t%s'%text)
 
 f.write('\n')
