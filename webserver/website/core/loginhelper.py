@@ -133,7 +133,7 @@ def processCookie():
 def logoutUser():
    global cookie, cookiereference, gusername, loginhtml
    
-   cookierow = sqlalchemysetup.session.query(tableclasses.Cookie).select_from(join(tableclasses.Cookie,tableclasses.Account)).filter(tableclasses.Account.username == gusername ).first()
+   cookierow = sqlalchemysetup.session.query(tableclasses.Cookie).filter(tableclasses.Cookie.cookiereference == cookiereference ).first()
    if cookierow != None:
       sqlalchemysetup.session.delete(cookierow)
       sqlalchemysetup.session.commit()
