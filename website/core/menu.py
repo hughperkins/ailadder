@@ -46,7 +46,8 @@ def getmenus():
       ['View accounts', 'viewaccounts.py'],
    ]])
 
-   menus.append([ 'About', [
+   menus.append([ 'Help', [
+      ['Architecture','architecture.py'],
       ['About', 'about.py']
    ]])
 
