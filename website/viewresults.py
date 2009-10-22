@@ -34,12 +34,12 @@ sqlalchemysetup.setup()
 
 loginhelper.processCookie()
 
-requests = sqlalchemysetup.session.query(MatchRequest).filter(MatchRequest.matchresult != None )
-for request in requests:
-   if os.path.isfile( replaycontroller.getReplayPath(request.matchrequest_id) ):
-      request.replayurl = replaycontroller.getReplayWebRelativePath(request.matchrequest_id) 
+[success,results] = gridclienthelper.getproxy().getmatchresultsv1()
 
-jinjahelper.rendertemplate( 'viewresults.html', requests = requests )
+if success:
+   jinjahelper.rendertemplate( 'viewresults.html', results = results, springgridurl = confighelper.getValue('springgridwebsite' ) )
+else:
+   jinjahelper.message( results )
 
 sqlalchemysetup.close()
 

@@ -18,26 +18,26 @@
 <td>replay</td>
 </tr>
 
-{% for request in requests %}
+{% for result in results %}
    <tr>
-   <td>{{request.matchrequest_id}}</td>
-   <td>{{request.ai0.ai_name|e}}</td>
-   <td>{{request.ai0.ai_version|e}}</td>
-   <td>{{request.ai1.ai_name|e}}</td>
-   <td>{{request.ai1.ai_version|e}}</td>
-   <td>{{request.map.map_name|e}}</td>
-   <td>{{request.mod.mod_name|e}}</td>
+   <td>{{result.matchrequest_id}}</td>
+   <td>{{result.ais[0].ai_name|e}}</td>
+   <td>{{result.ais[0].ai_version|e}}</td>
+   <td>{{result.ais[1].ai_name|e}}</td>
+   <td>{{result.ais[1].ai_version|e}}</td>
+   <td>{{result.map_name|e}}</td>
+   <td>{{result.mod_name|e}}</td>
    <td>
-   {% for option in request.options %}
-      {{option.option.option_name|e}}&nbsp;
+   {% for option in result.options %}
+      {{option|e}}&nbsp;
    {% endfor %}
    &nbsp;
    </td>
-   <td>{{request.matchrequestinprogress.botrunner.botrunner_name|e}}</td>
-   <td>{{request.matchresult.matchresult|e}}</td>
+   <td>{{result.botrunner_name|e}}</td>
+   <td>{{result.matchresult|e}}</td>
    <td>
-   {% if request.replayurl != none %}
-      <a href='{{request.replayurl|e}}'>replay</a>
+   {% if result.replayurl != none %}
+      <a href='{{springgridurl}}/{{result.replayrelativeurl|e}}'>replay</a>
    {% endif %}
    </td>
    </tr>
