@@ -3,13 +3,11 @@ what is being worked on at the moment:
   scheduling
 
 todo:
-- add botrunner howto to website
+- add configuration page to website
 - add subscription to each league for each ai
 - add scheduler, to queue up matchrequests for each league
 - add results calculator
-- enforce no-cheating option in botrunner
 - some way of passing options through to ai (via script.txt?)
-- upload logfile after game, per-ai, or at least the infolog.txt
 - be able to configure arm vs core vs ... vs random
 
 low:
