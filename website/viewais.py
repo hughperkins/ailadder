@@ -31,6 +31,13 @@ sqlalchemysetup.setup()
 
 loginhelper.processCookie()
 
+# lets load from springgrid.  we can cache this in the future, but for now ...
+
+gridais = gridclienthelper.getproxy().getais()
+
+for gridai in gridais:
+   aihelper.addaiifdoesntexist( gridai[0], gridai[1] )
+
 ais = sqlalchemysetup.session.query(AI)
 
 showform = ( loginhelper.gusername != '' )
