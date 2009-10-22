@@ -30,13 +30,13 @@ sqlalchemysetup.setup()
 
 loginhelper.processCookie()
 
-mods = sqlalchemysetup.session.query(tableclasses.Mod)
+mods = gridclienthelper.getproxy().getmods()
 
 showform = False
-if loginhelper.gusername != '' and False:
+if loginhelper.gusername != '' and False:  # hiding this for now
    showform = True
 
-jinjahelper.rendertemplate('viewmods.html', mods = mods, showform = showform )
+jinjahelper.rendertemplate('viewmods.html', menus = menu.getmenus(), mods = mods, showform = showform )
 
 sqlalchemysetup.close()
 

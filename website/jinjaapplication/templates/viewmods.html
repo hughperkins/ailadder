@@ -1,24 +1,38 @@
 {% extends 'menu.html' %}
 
+{#
+Copyright Hugh Perkins 2009
+hughperkins@gmail.com http://manageddreams.com
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+more details.
+
+You should have received a copy of the GNU General Public License along
+with this program in the file licence.txt; if not, write to the
+Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-
+1307 USA
+You can find the licence also on the web at:
+http://www.opensource.org/licenses/gpl-license.php
+#}
+
 {% block content %}
 
-<h3>AILadder - Mod List</h3>
+<h3>AILadder - mod List</h3>
 <table border='1' padding='3'>
-<tr class='tablehead'><td>Mod name</td><td>Mod archive checksum (Note: NOT the same as the maphash in the startscript)</td><td>Mod download url</td></tr>
+<tr class='tablehead'><td>mod name</td></tr>
 
-  {% for mod in mods %}
-   <tr>
-   <td>{{mod.mod_name|e}}</td>
-   <td>{{mod.mod_archivechecksum}}</td>
-   <td>
-      {% if mod.mod_url != None %}
-         <a href='{{mod.mod_url|e}}'>{{mod.mod_url|e}}</a>
-      {% else %}
-         &nbsp;
-      {% endif %}
-   </td>
-   </tr>
-  {% endfor %}
+{% for mod in mods %}
+<tr><td>{{mod|e}}</td>
+</tr>
+{% endfor %}
+
 </table>
 
 {% if showform %}
@@ -27,15 +41,14 @@
    <p />
 
    <h4>Register new mod:</h4>
-   <p>Note: the modname and the modhash should be set to whatever is used "
-   in the startscript, so an easy way to get them is to start a game "
-   from the lobby, then look at the file 'script.txt' in the spring "
+   <p>Note: the modname and the modhash should be set to whatever is used
+   in the startscript, so an easy way to get them is to start a game
+   from the lobby, then look at the file 'script.txt' in the spring
    game directory</p>
    <form action='addmod.py' method='post'>
    <table border='1' padding='3'>
-   <tr><td>Mod name</td><td><input name='modname'</td></tr>
-   <tr><td>Mod hash</td><td><input name='modhash'</td></tr>
-   <tr><td>Mod download url</td><td><input name='modurl'</td></tr>
+   <tr><td>mod name</td><td><input name='modname'</td></tr>
+   <tr><td>mod download url</td><td><input name='modurl'</td></tr>
    <tr><td></td><td><input type='submit' value='Add' /></td></tr>
    </table>
    </form>
