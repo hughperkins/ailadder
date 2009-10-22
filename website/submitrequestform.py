@@ -29,23 +29,30 @@
 # from the database, to make it easy to use
 
 import cgitb; cgitb.enable()
+import xmlrpclib
 
 from utils import *
 from core import *
 
 sqlalchemysetup.setup()
 
-ais = sqlalchemysetup.session.query( tableclasses.AI.ai_name, tableclasses.AI.ai_version )
-maps = listhelper.tuplelisttolist( sqlalchemysetup.session.query( tableclasses.Map.map_name ) )
-mods = listhelper.tuplelisttolist( sqlalchemysetup.session.query( tableclasses.Mod.mod_name ) )
+multicall = xmlrpclib.MultiCall( gridclienthelper.getproxy() )
+multicall.getais()
+multicall.getmaps()
+multicall.getmods()
+results = multicall()
+ais = results[0]
+maps = results[1]
+mods = results[2]
 
-options = listhelper.tuplelisttolist( sqlalchemysetup.session.query( tableclasses.AIOption.option_name ) )
+#options = listhelper.tuplelisttolist( sqlalchemysetup.session.query( tableclasses.AIOption.option_name ) )
+options = [] # placeholder
 
 aiitems = []
 aivalues = []
 for ai in ais:
-   aivalues.append( ai.ai_name + " " + ai.ai_version )
-   aiitems.append( ai.ai_name + "|" + ai.ai_version )
+   aivalues.append( ai['ai_name'] + " " + ai['ai_version'] )
+   aiitems.append( ai['ai_name'] + "|" + ai['ai_version'] )
 
 jinjahelper.rendertemplate('submitrequestform.html', ais = ais, maps = maps, mods = mods, aivalues = aivalues, aiitems = aiitems, options = options )
 

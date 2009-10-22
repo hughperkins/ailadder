@@ -36,7 +36,7 @@ loginhelper.processCookie()
 gridais = gridclienthelper.getproxy().getais()
 
 for gridai in gridais:
-   aihelper.addaiifdoesntexist( gridai[0], gridai[1] )
+   aihelper.addaiifdoesntexist( gridai['ai_name'], gridai['ai_version'] )
 
 ais = sqlalchemysetup.session.query(AI)
 

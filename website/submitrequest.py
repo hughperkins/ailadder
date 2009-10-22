@@ -72,28 +72,12 @@ def go():
    mapname = formhelper.getValue("mapname")
    modname = formhelper.getValue("modname")
 
-   #if matchrequestcontroller.submitrequest( matchrequest ):
-    #  jinjahelper.message( "Submitted"
-      # could be nice to print out queue here, or make another page for that
+   [success, errormessage ] = gridclienthelper.getproxy().schedulematchv1( mapname, modname, [ { 'ai_name': ai0name, 'ai_version': ai0version }, { 'ai_name': ai1name, 'ai_version': ai1version } ], [] ) 
 
-   map = sqlalchemysetup.session.query(Map).filter(Map.map_name == mapname ).first()
-   mod = sqlalchemysetup.session.query(Mod).filter(Mod.mod_name == modname ).first()
-   ai0 = sqlalchemysetup.session.query(AI).filter(AI.ai_name == ai0name ).filter(AI.ai_version == ai0version ).first()
-   ai1 = sqlalchemysetup.session.query(AI).filter(AI.ai_name == ai1name ).filter(AI.ai_version == ai1version ).first()
-
-   matchrequest = MatchRequest( ai0 = ai0, ai1 = ai1, map = map, mod = mod )
-   sqlalchemysetup.session.add( matchrequest )
-
-   # add options:
-   availableoptions = sqlalchemysetup.session.query(AIOption)
-   # get selected options from form submission:
-   for option in availableoptions:
-      if formhelper.getValue( "option_" + option.option_name ) != None:
-         matchrequest.options.append( MatchRequestOption( option ) )
-
-   sqlalchemysetup.session.commit()
-
-   jinjahelper.message( "Submitted ok." )
+   if success:
+      jinjahelper.message( "Submitted ok." )
+   else:
+      jinjahelper.message( errormessage )
 
 try:
    go()
