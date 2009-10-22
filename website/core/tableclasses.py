@@ -160,17 +160,17 @@ class League(Base):
    league_name = Column(String(255))
    league_creatorid = Column(Integer,ForeignKey('accounts.account_id'))
    map_name = Column(String(255))
-   mod_id = Column(Integer,ForeignKey('mods.mod_id'))
+   mod_name = Column(String(255))
    nummatchesperaipair = Column(Integer)
 
    creator = relation("Account")
    options = relation("LeagueOption")
 
-   def __init__( self, league_name, creator, modname, mapname, nummatchesperaipair ):
+   def __init__( self, league_name, creator, mod_name, map_name, nummatchesperaipair ):
       self.league_name = league_name
       self.creator = creator
-      self.modname = modname
-      self.mapname = mapname
+      self.mod_name = mod_name
+      self.map_name = map_name
       self.nummatchesperaipair = nummatchesperaipair
 
 class LeagueOption(Base):
