@@ -40,12 +40,10 @@ def getmenus():
       ['Setup notes', 'setupnotes.py'],
       ['View league groups', 'viewleaguegroups.py'],
       ['View leagues', 'viewleagues.py'],
-      ['View available bot runners', 'viewbotrunners.py'],
       ['View available maps', 'viewmaps.py'],
       ['View available mods', 'viewmods.py'],
       ['View available ais', 'viewais.py'],
       ['View accounts', 'viewaccounts.py'],
-      ['Run website diagnostics', 'diagnostics.py']
    ]])
 
    menus.append([ 'About', [
