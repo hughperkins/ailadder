@@ -22,10 +22,10 @@ You can find the licence also on the web at:
 http://www.opensource.org/licenses/gpl-license.php
 #}
 
+{% block title %}AILadder - Account List{% endblock title %}
 {% block content %}
 
-   <h3>AILadder - Account List</h3>
-   <table border='1' padding='3'>
+   <table padding='3'>
    <tr class='tablehead'><td>username</td><td>User full name</td><td>Delete</td></tr>
 
    {% for account in accounts %}
@@ -47,9 +47,9 @@ http://www.opensource.org/licenses/gpl-license.php
       <hr />
       <p />
 
-      <h4>Create new account:</h4>
+      <h2>Create new account:</h2>
       <form action='addaccount.py' method='post'>
-      <table border='1' padding='3'>
+      <table padding='3'>
       <tr><td>Username</td><td><input name='username'</td></tr>
       <tr><td>User full name</td><td><input name='userfullname'</td></tr>
       <tr><td>User email address</td><td><input name='useremailaddress'</td></tr>

@@ -1,8 +1,8 @@
 {% extends 'menu.html' %}
 
+{% block title %}AI Ladder - Match results{% endblock title %}
 {% block content %}
 
-<h3>AILadder - Match results</h3>
 <table>
 <tr class='tablehead'>
 <td>matchrequestid</td>
@@ -19,7 +19,7 @@
 </tr>
 
 {% for result in results %}
-   <tr>
+   <tr {% if loop.even %}class="alt"{% endif %}>
    <td>{{result.matchrequest_id}}</td>
    <td>{{result.ais[0].ai_name|e}}</td>
    <td>{{result.ais[0].ai_version|e}}</td>

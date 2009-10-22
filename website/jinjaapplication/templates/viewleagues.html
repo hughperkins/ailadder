@@ -23,13 +23,13 @@ http://www.opensource.org/licenses/gpl-license.php
 #}
 
 {% import 'formhelper.html' as formhelper %}
+{% block title %}AILadder - View Leagues{% endblock title %}
 {% block content %}
 
-<h3>AILadder - View leagues</h3>
 <p>A league is a specific game configuration used for testing AIs against each other</p>
 <p>For example, a league could be a specific map, mod, and certain options, like say cheating on, or cheating off</p>
 <p>You can group leagues together in leaguegroups.</p>
-<table border='1' padding='3'>
+<table padding='3'>
 <tr class='tablehead'><td>League Name:</td><td>Mod Name</td><td>Map Name</td><td>Number matches per AI pair</td><td>Assigned options</td></tr>
 
 {% for league in leagues %}
@@ -55,9 +55,9 @@ http://www.opensource.org/licenses/gpl-license.php
    <hr />
    <p />
 
-   <h4>Create new league:</h4>
+   <h2>Create new league:</h2>
    <form action='addleague.py' method='post'>
-   <table border='1' padding='3'>
+   <table padding='3'>
    <tr><td>League name</td><td><input name='leaguename'</td></tr>
    <tr><td>Mod name</td><td>{{formhelper.listtodropdown( 'modname', mods )}}</td></tr>
    <tr><td>Map name</td><td>{{formhelper.listtodropdown( 'mapname', maps )}}</td></tr>

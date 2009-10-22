@@ -1,6 +1,9 @@
 {% extends 'menu.html' %}
 
 {% import 'formhelper.html' as formhelper %}
+{% block title %}
+Request counts per league
+{% endblock title %}
 {% block content %}
 
 <p>This page is mainly for debugging, at least for now.</p>
@@ -10,9 +13,9 @@ Pick a league: <form method="post" action="showaimatchpaircount.py">{{formhelper
 </form>
 
 {#
-<h3>AI Indexes</h3>
+<h2>AI Indexes</h2>
 
-<table cellpadding="3" border="1">
+<table cellpadding="3">
 <tr><td>index</td><td>ai name</td><td>ai version</td></tr>
 {% for index in indextoai.keys() %}
 <tr><td>{{index}}</td><td>{{indextoai[index].ai_name}}</td><td>{{indextoai[index].ai_version}}</td></tr>
@@ -20,9 +23,9 @@ Pick a league: <form method="post" action="showaimatchpaircount.py">{{formhelper
 </table>
 #}
 
-<h3>Attributes of league '{{league.league_name}}'</h3>
+<h2>Attributes of league '{{league.league_name}}'</h2>
 
-<table cellpadding="3" border="1">
+<table cellpadding="3">
 <tr><td class='tablehead'>Map</td><td>{{league.map_name}}</td></tr>
 <tr><td class='tablehead'>Mod</td><td>{{league.mod_name}}</td></tr>
 <tr><td class='tablehead'>Options</td><td>
@@ -32,9 +35,9 @@ Pick a league: <form method="post" action="showaimatchpaircount.py">{{formhelper
 &nbsp;</td></tr>
 </table>
 
-<h3>AI pair match count</h3>
+<h2>AI pair match count</h2>
 
-<table cellpadding="3" border="1">
+<table cellpadding="3">
 <tr><td class='tablehead'>(matches finished) / ( matches finished + matches queued)</td>
    {% for inneraiindex in range(numais) %}
       <td class='tablehead'>{{indextoai[inneraiindex].ai_name}} {{indextoai[inneraiindex].ai_version}}</td>

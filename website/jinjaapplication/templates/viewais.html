@@ -1,10 +1,9 @@
 {% extends 'menu.html' %}
 
+{% block title %}AILadder - AI List{% endblock title %}
 {% block content %}
 
-<h3>AILadder - AI List</h3>
-
-<table border='1' padding='3'>
+<table padding='3'>
 <tr class='tablehead'><td>AI Name</td><td>AI Version</td><td>Compatible Options</td><td>Download url</td></tr>
 
 {% for ai in ais %}
@@ -37,11 +36,11 @@
    <hr />
    <p />
 
-   <h4>Register new AI:</h4>
+   <h2>Register new AI:</h2>
    Note that the AI name is case-sensitive.<p />
    Download url should be for a file in .tgz .tar.gz or .tar.bz2 format.<p />
    <form action='addai.py' method='post'>
-   <table border='1' padding='3'>
+   <table padding='3'>
    <tr><td>AI name</td><td><input name='ainame'</td></tr>
    <tr><td>AI version</td><td><input name='aiversion'</td></tr>
    <tr><td>Download url</td><td><input name='downloadurl'</td></tr>

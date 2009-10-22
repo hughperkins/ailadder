@@ -1,3 +1,7 @@
+body * { 
+   font-family: helvetica,arial,verdana; 
+}
+
 div.header {
    position: absolute;
    top: 20px;
@@ -21,24 +25,22 @@ div.menu {
    width: 175px;
 }
 div.menu div {
-    background-color: lightblue;
+    background-color: white;
 }
 div.menu div.popuptitle {
-   border: solid 1px;
    padding: 5px;
 }
 
 div.menu div.popup {
    display: none;
    font-weight: normal;
-   border: solid 1px;
-    background-color: lightblue;
+   background-color: white;
    width: 280px;
 }
 
 div.menu:hover div.popuptitle {
    font-weight: bold;
-   background-color: aaf;
+   background-color: white;
 }
 
 div.menu:hover div.popup {
@@ -57,25 +59,32 @@ div.menuitem {
 div.menuitem:hover {
    padding: 10px;
    font-weight: bold;   
-   background-color: aaf;
+   background-color: white;
 }
-
+h1 {
+   font-size: 16pt;
+}
+h2 {
+   font-size: 14pt;
+}
 table {
-   border: solid 1px;
    border-spacing: 0px;
 }
 tr.tablehead td {
-   background-color: aaf;
+   background-color: #F0F0F0;
    font-weight: bold;
+   padding: 8px;
 }
 td.tablehead {
-   background-color: aaf;
+   background-color: #f0f0f0;
    font-weight: bold;
+   padding: 8px;
+}
+td {
+   padding: 3px;
 }
 tr {
-   padding: 3px;
-   border: solid 1px;
-   background-color: lightblue;
+   background-color: #f8f8f8;
 }
 tr.inprogress {
    background-color: lightgreen;

@@ -1,5 +1,5 @@
 Content-type: text/html
-{% block headers %}{% endblock %}
+{% block headers %}{% endblock headers %}
 
 {#
 Copyright Hugh Perkins 2009
@@ -25,24 +25,30 @@ http://www.opensource.org/licenses/gpl-license.php
 
 <html>
 <head>
-<title>AILadder</title>
-<link rel="stylesheet" rev="stylesheet" href="style.css">
+   <title>AILadder</title>
+   <link rel="stylesheet" rev="stylesheet" href="style.css">
 </head>
 <body>
-<div class="mainmenu">
-{%for menu in menus%}
-<div class="menu">
-<div class="popuptitle">{{menu[0]}}</div>
-<div class="popup">
-{%for menuitem in menu[1]%}
-<a href={{menuitem[1]}}><div class="menuitem">{{menuitem[0]}}</div></a>
-{%endfor%}
-</div>
-</div>
-{%endfor%}
-</div>
-<div class="contents">
-{% block content %}{% endblock %}
+<div id="ailadder">
+
+   <div class="mainmenu">
+      {%for menu in menus%}
+      <div class="menu">
+         <div class="popuptitle">{{menu[0]}}</div>
+         <div class="popup">
+            {%for menuitem in menu[1]%}
+            <a href={{menuitem[1]}}><div class="menuitem">{{menuitem[0]}}</div></a>
+            {%endfor%}
+         </div>
+      </div>
+      {%endfor%}
+   </div>
+
+   <div class="contents">
+      <h1>{% block title %}{% endblock title %}</h1>
+      {% block content %}{% endblock content %}
+   </div>
+
 </div>
 </body>
 </html>

@@ -23,10 +23,10 @@ http://www.opensource.org/licenses/gpl-license.php
 #}
 
 {% import 'formhelper.html' as formhelper %}
+{% block title %}AILadder - View account {{account.username|e}}{% endblock title %}
 {% block content %}
 
-<h3>AILadder - View account {{account.username|e}}</h3>
-<table border='1' padding='3'>
+<table padding='3'>
 <tr class='tablehead'><td>Role:</td><td></td></tr>
 
 {% for role in account.roles %}
@@ -42,9 +42,9 @@ http://www.opensource.org/licenses/gpl-license.php
    <hr />
    <p />
 
-   <h4>Add roles to account:</h4>
+   <h2>Add roles to account:</h2>
    <form action='addroletoaccount.py' method='post'>
-   <table border='1' padding='3'>
+   <table padding='3'>
    <tr><td>Role name</td><td>
    {{formhelper.listtodropdown( 'rolename', potentialroles )}}
    </td></tr>

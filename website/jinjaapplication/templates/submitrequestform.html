@@ -1,10 +1,10 @@
 {% extends 'menu.html' %}
 {% import 'formhelper.html' as formhelper %}
+{% block title %}AILadder - submit match request{% endblock title %}
 {% block content %}
 
-<h3>AILadder - submit game request</h3>
 <form action='submitrequest.py' method='post'>
-<table border='1' padding='3'>
+<table padding='3'>
 <tr><td>AI0 name</td><td>{{formhelper.itemsandvaluestodropdown("ai0nameversion", aiitems, aivalues ) }}</td></tr>
 <tr><td>AI1 name</td><td>{{formhelper.itemsandvaluestodropdown("ai1nameversion", aiitems, aivalues ) }}</td></tr>
 <tr><td>Map</td><td>{{formhelper.listtodropdown( 'mapname', maps ) }}</td></tr>
