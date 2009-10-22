@@ -1,5 +1,10 @@
 Please see this thread http://springrts.com/phpbb/viewtopic.php?f=15&t=20358 for details.
 
+AILadder gridclient branch migrates AILadder to a client of springgrid
+
+AILadder gridclient's goals and philosophy are:
+- provide a website that lets AI devs upload their AIs and see easily how they fair against other AIs on a range of maps and playing conditions
+
 botrunner contains the botrunner, that runs spring games on any pc
 somewhere
 
