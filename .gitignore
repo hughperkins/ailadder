@@ -35,16 +35,16 @@ CMakeFiles
 Makefile
 cmake_install.cmake
 
-# Sqlalchemy build
-webserver/dependencies/SQLAlchemy-0.5.6/build
-webserver/dependencies/SQLAlchemy-0.5.6/dist
-
 # package.py config file
 package_config.py
 
-package_config.py
+# dependency build directories
 webserver/dependencies/SQLAlchemy-0.5.6/build
 webserver/dependencies/SQLAlchemy-0.5.6/dist
 webserver/dependencies/Jinja2-2.2.1/build
 webserver/dependencies/Jinja2-2.2.1/dist
+dependencies/SQLAlchemy-0.5.6/build
+dependencies/SQLAlchemy-0.5.6/dist
+dependencies/Jinja2-2.2.1/build
+dependencies/Jinja2-2.2.1/dist
 

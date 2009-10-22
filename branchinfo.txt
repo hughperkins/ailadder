@@ -15,3 +15,6 @@ configindb:
 - moved configuration values, except for those needed to connect to database, into 
   new db table 'config'
 
+gridclient:
+- this will be a client of the new springgrid fork of AILadder
+
