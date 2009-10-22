@@ -1,6 +1,6 @@
-body * { 
-   font-family: helvetica,arial,verdana; 
-}
+body * {
+   font-family: Helvetica, Arial, Verdana;
+  }
 
 div.header {
    position: absolute;
@@ -15,33 +15,24 @@ div.mainmenu {
 }
 div.contents {
    position: absolute;
-
    top: 90px;
-   left: 60px;
+   left: 50px;
 }
 
 div.menu {
    float: left;   
    width: 175px;
 }
-div.menu div {
-    background-color: white;
-}
-div.menu div.popuptitle {
-   padding: 5px;
-}
 
 div.menu div.popup {
    display: none;
    font-weight: normal;
-   background-color: white;
-   width: 280px;
+   border: solid 1px #bbb;
+   background-color: #FAFAFA;
+   margin-top:10px;
+   width: 200px;
 }
 
-div.menu:hover div.popuptitle {
-   font-weight: bold;
-   background-color: white;
-}
 
 div.menu:hover div.popup {
    display: block;
@@ -58,37 +49,38 @@ div.menuitem {
 }
 div.menuitem:hover {
    padding: 10px;
-   font-weight: bold;   
-   background-color: white;
+   background-color: #EEEEEE;
 }
-h1 {
-   font-size: 16pt;
-}
-h2 {
-   font-size: 14pt;
-}
+
 table {
-   border-spacing: 0px;
+   border: none !important;
+   border-spacing: 0px !important;
 }
+
+td {
+	border-collapse:collapse;
+	border: none;
+}
+
 tr.tablehead td {
-   background-color: #F0F0F0;
+   background-color: aaf;
    font-weight: bold;
-   padding: 8px;
 }
+
 td.tablehead {
    background-color: #f0f0f0;
-   font-weight: bold;
-   padding: 8px;
+   padding:5px 30px 5px 5px;
 }
-td {
-   padding: 3px;
-}
+
 tr {
-   background-color: #f8f8f8;
+   padding: 3px;
+   background-color: #fafafa;
 }
+
 tr.inprogress {
    background-color: lightgreen;
 }
+
 tr.success {
    background-color: lightgreen;
 }
