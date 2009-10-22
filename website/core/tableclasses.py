@@ -106,19 +106,17 @@ class AIAllowedMap(Base):
    __tablename__ = 'ai_allowedmaps'
 
    ai_id = Column(Integer,ForeignKey('ais.ai_id'),primary_key=True)
-   map_id = Column(Integer,ForeignKey('maps.map_id'),primary_key=True)
+   map_name = Column(String(255),primary_key=True)
 
    ai = relation("AI")
-   map = relation("Map")
 
 class AIAllowedMod(Base):
    __tablename__ = 'ai_allowedmods'
 
    ai_id = Column(Integer,ForeignKey('ais.ai_id'),primary_key=True)
-   mod_id = Column(Integer,ForeignKey('mods.mod_id'),primary_key=True)
+   mod_name = Column(String(255),primary_key=True)
 
    ai = relation("AI")
-   mod = relation("Mod")
 
 class AIAllowedOption(Base):
    __tablename__ = 'ai_allowedoptions'
@@ -161,20 +159,18 @@ class League(Base):
    league_id = Column(Integer,primary_key = True )
    league_name = Column(String(255))
    league_creatorid = Column(Integer,ForeignKey('accounts.account_id'))
-   map_id = Column(Integer,ForeignKey('maps.map_id'))
+   map_name = Column(String(255))
    mod_id = Column(Integer,ForeignKey('mods.mod_id'))
    nummatchesperaipair = Column(Integer)
 
    creator = relation("Account")
-   map = relation("Map")
-   mod = relation("Mod")
    options = relation("LeagueOption")
 
-   def __init__( self, league_name, creator, mod, map, nummatchesperaipair ):
+   def __init__( self, league_name, creator, modname, mapname, nummatchesperaipair ):
       self.league_name = league_name
       self.creator = creator
-      self.mod = mod
-      self.map = map
+      self.modname = modname
+      self.mapname = mapname
       self.nummatchesperaipair = nummatchesperaipair
 
 class LeagueOption(Base):
