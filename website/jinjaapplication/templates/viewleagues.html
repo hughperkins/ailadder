@@ -35,8 +35,8 @@ http://www.opensource.org/licenses/gpl-license.php
 {% for league in leagues %}
    <tr>
    <td><a href='viewleague.py?leaguename={{league.league_name|e}}'>{{league.league_name|e}}</a></td>
-   <td>{{league.mod.mod_name|e}}</td>
-   <td>{{league.map.map_name|e}}</td>
+   <td>{{league.mod_name|e}}</td>
+   <td>{{league.map_name|e}}</td>
    <td>{{league.nummatchesperaipair}}</td>
    <td>
    {% for option in league.options %}

@@ -35,8 +35,8 @@ leagues = sqlalchemysetup.session.query(League)
 
 showform = loginhelper.gusername != ''
 
-maps = listhelper.tuplelisttolist( sqlalchemysetup.session.query(Map.map_name) )
-mods = listhelper.tuplelisttolist( sqlalchemysetup.session.query(Mod.mod_name) )
+maps = gridclienthelper.getproxy().getmaps()
+mods = gridclienthelper.getproxy().getmods()
 
 jinjahelper.rendertemplate('viewleagues.html', leagues = leagues, showform = showform, maps = maps, mods = mods )
 

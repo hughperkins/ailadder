@@ -41,10 +41,8 @@ else:
    nummatchesperairpair = int(formhelper.getValue('nummatchesperairpair'))
 
    if leaguename != None and modname != None and mapname != None and leaguename != '' and modname != '' and mapname != '':
-      map = maphelper.getMap(mapname)
-      mod = modhelper.getMod(modname)
       account = accounthelper.getAccount( loginhelper.gusername )
-      league = League( leaguename, account, mod, map, nummatchesperairpair )
+      league = League( leaguename, account, modname, mapname, nummatchesperairpair )
       sqlalchemysetup.session.add( league )
       sqlalchemysetup.session.commit()
       jinjahelper.message( "Added ok" )
