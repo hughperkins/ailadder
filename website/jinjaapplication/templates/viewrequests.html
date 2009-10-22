@@ -5,7 +5,6 @@
 <table border='1' padding='3'>
 <tr class='tablehead'>
 <td>matchrequestid</td>
-<td>scheduled for which league</td>
 <td>ai0name</td>
 <td>ai0version</td>
 <td>ai1name</td>
@@ -13,38 +12,22 @@
 <td>mapname</td>
 <td>modname</td>
 <td>options</td>
-<td>botrunnername</td>
-<td>botrunnerinstanceid</td>
-<td>datetimeassigned</td>
 </tr>
 
 {% for request in requests %}
-   {% if request.matchrequestinprogress != none %}
-      <tr class='inprogress'>
-   {% else %}
-      <tr>
-   {% endif %}
+   <tr>
    <td>{{request.matchrequest_id}}</td>
-   <td>{{request.league.league_name|e}}&nbsp;</td>
-   <td>{{request.ai0.ai_name|e}}</td>
-   <td>{{request.ai0.ai_version|e}}</td>
-   <td>{{request.ai1.ai_name|e}}</td>
-   <td>{{request.ai1.ai_version|e}}</td>
-   <td>{{request.map.map_name|e}}</td>
-   <td>{{request.mod.mod_name|e}}</td>
+   <td>{{request.ais[0].ai_name|e}}</td>
+   <td>{{request.ais[0].ai_version|e}}</td>
+   <td>{{request.ais[1].ai_name|e}}</td>
+   <td>{{request.ais[1].ai_version|e}}</td>
+   <td>{{request.map_name|e}}</td>
+   <td>{{request.mod_name|e}}</td>
    <td>
    {% for option in request.options %}
-      {{option.option.option_name|e}}&nbsp;
+      {{option|e}}&nbsp;
    {% endfor %}
    &nbsp;</td>
-   {% if request.matchrequestinprogress != None: %}
-      <td>{{request.matchrequestinprogress.botrunner.botrunner_name|e}}</td>
-      <td>{{request.matchrequestinprogress.botrunnersession.botrunner_session_id|truncate(5,'...')|e}}</td>
-      <td>{{datetimeassignedbyrequest[request]}}</td>
-   {% else %}
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-   {% endif %}
    </tr>
 
 {% endfor %}

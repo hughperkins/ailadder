@@ -31,14 +31,9 @@ sqlalchemysetup.setup()
 
 loginhelper.processCookie()
 
-requests = sqlalchemysetup.session.query(MatchRequest).filter(MatchRequest.matchresult == None )
+[success,requests] = gridclienthelper.getproxy().getmatchrequestqueuev1()
 
-datetimeassignedbyrequest = {}
-for request in requests:
-   if request.matchrequestinprogress != None:
-      datetimeassignedbyrequest[request] = str( dates.dateStringToDateTime( request.matchrequestinprogress.datetimeassigned ) )
-
-jinjahelper.rendertemplate('viewrequests.html', requests = requests, datetimeassignedbyrequest = datetimeassignedbyrequest )
+jinjahelper.rendertemplate('viewrequests.html', requests = requests )
 
 sqlalchemysetup.close()
 
