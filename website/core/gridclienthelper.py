@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # Copyright Hugh Perkins 2009
 # hughperkins@gmail.com http://manageddreams.com
 #
@@ -21,22 +19,11 @@
 # http://www.opensource.org/licenses/gpl-license.php
 #
 
-import cgitb; cgitb.enable()
+import xmlrpclib
 
-from utils import *
-from core import *
+import confighelper
 
-sqlalchemysetup.setup()
+def getproxy():
+   return xmlrpclib.ServerProxy( uri = confighelper.getValue('springgridwebsite') + "/api_webservice.py" )
 
-loginhelper.processCookie()
-
-maps = gridclienthelper.getproxy().getmaps()
-
-showform = False
-if loginhelper.gusername != '' and False:  # hiding this for now
-   showform = True
-
-jinjahelper.rendertemplate('viewmaps.html', menus = menu.getmenus(), maps = maps, showform = showform )
-
-sqlalchemysetup.close()
 

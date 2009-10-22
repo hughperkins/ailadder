@@ -263,6 +263,7 @@ def addstaticdata(session):
    session.add(Config('expiresessionminutes', 20 ) )
    session.add(Config('gameendstring', "] Team%TEAMNUMBER%" ) )
    session.add(Config('cheatingstring', "] SkirmishAI (with team ID = %TEAMNUMBER%): Cheating enabled" ) )
+   session.add(Config('springgridwebsite', "http://localhost/springgrid" ) )
 
    # maybe roles static data could be created by core/roles.py?
    # anyway, for now... :
