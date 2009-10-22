@@ -23,11 +23,11 @@ Pick a league: <form method="post" action="showaimatchpaircount.py">{{formhelper
 <h3>Attributes of league '{{league.league_name}}'</h3>
 
 <table cellpadding="3" border="1">
-<tr><td class='tablehead'>Map</td><td>{{league.map.map_name}}</td></tr>
-<tr><td class='tablehead'>Mod</td><td>{{league.mod.mod_name}}</td></tr>
+<tr><td class='tablehead'>Map</td><td>{{league.map_name}}</td></tr>
+<tr><td class='tablehead'>Mod</td><td>{{league.mod_name}}</td></tr>
 <tr><td class='tablehead'>Options</td><td>
 {% for option in league.options %}
-{{option.option.option_name}} 
+{{option}} 
 {% endfor %}
 &nbsp;</td></tr>
 </table>
@@ -36,13 +36,13 @@ Pick a league: <form method="post" action="showaimatchpaircount.py">{{formhelper
 
 <table cellpadding="3" border="1">
 <tr><td class='tablehead'>(matches finished) / ( matches finished + matches queued)</td>
-   {% for innerai in ais %}
-      <td class='tablehead'>{{innerai.ai_name}} {{innerai.ai_version}}</td>
+   {% for inneraiindex in range(numais) %}
+      <td class='tablehead'>{{indextoai[inneraiindex].ai_name}} {{indextoai[inneraiindex].ai_version}}</td>
    {% endfor %}
-{% for outerai in ais %}
-   <tr><td class='tablehead'>{{outerai.ai_name}} {{outerai.ai_version}}</td>
-   {% for innerai in ais %}
-      <td {% if aipairfinishedcount[aitoindex[outerai]][aitoindex[innerai]] == aipairmatchcount[aitoindex[outerai]][aitoindex[innerai]] %}class='success'{% endif %}>{{aipairfinishedcount[aitoindex[outerai]][aitoindex[innerai]]}} / {{aipairmatchcount[aitoindex[outerai]][aitoindex[innerai]]}}</td>
+{% for outeraiindex in range(numais) %}
+   <tr><td class='tablehead'>{{indextoai[outeraiindex].ai_name}} {{indextoai[outeraiindex].ai_version}}</td>
+   {% for inneraiindex in range(numais) %}
+      <td {% if aipairfinishedcount[outeraiindex][inneraiindex] >= nummatchesperaipair  %}class='success'{% endif %}>{{aipairfinishedcount[outeraiindex][inneraiindex]}} / {{aipairqueuedmatchcount[outeraiindex][inneraiindex] + aipairfinishedcount[outeraiindex][inneraiindex]}}</td>
    {% endfor %}
    </tr>
 {% endfor %}

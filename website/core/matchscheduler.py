@@ -52,43 +52,51 @@ def scheduleleaguematch( league, ai0, ai1 ):
    matchrequestcontroller.addmatchrequest( ai0 = ai0, ai1 = ai1, map = league.map, mod = league.mod, league = league )
 
 # returns [ dict from ai to zero-based aiindex, dict from index to ai ]
-def getaiindexes(ais):
+def getindextoai(ais):
    # assume this query is cached in memory, so fine to redo
-   aitoindex = {}  # dict from ai to aiindex
+   #aitoindex = {}  # dict from ai to aiindex
    indextoai = {} # dict from index to ai
    for ai in ais:
-      aitoindex[ ai ] = len(aitoindex)
+      #aitoindex[ ai ] = len(aitoindex)
       indextoai[ len(indextoai) ] = ai
-   return [ aitoindex, indextoai ]
+   #return [ aitoindex, indextoai ]
+   return indextoai
 
 # return 2d list ([][]), indexed by indexes returned by getaiindexes
 # showing the numer of matches in the queue between each pair of ais
 # have to pass in requests one wants to consider
 # that means one can pass in all requests, or just finished, or just not finished
 # etc...
-def getaipairmatchcount(requests, league, ais, aitoindex ):
+def getaipairmatchcount(requests, league, ais, indextoai ):
    # go through each matchrequest in the queue, and increment matchcountarray member
    # we go through all requests that match the league: both the ones that have results, and the ones 
    # that don't
    matchcountarray = []  # 2d array of count of matches from one ai to another
    # build up empty array
-   for outerai in ais:
+   for outeraiindex in xrange(len(ais)):
       thisline = []
       matchcountarray.append(thisline)
-      for innerai in ais:
+      for inneraiindex in xrange(len(ais)):
          thisline.append(0)
    for matchrequest in requests:
-      if matchrequest.map != league.map:
+      if matchrequest['map_name'] != league.map_name:
          continue
-      if matchrequest.mod != league.mod:
+      if matchrequest['mod_name'] != league.mod_name:
          continue
-      ai0index = aitoindex[matchrequest.ai0]
-      ai1index = aitoindex[matchrequest.ai1]
+      ai0index = getindex( indextoai, matchrequest['ais'][0] )
+      ai1index = getindex( indextoai, matchrequest['ais'][1] )
       # add both ways around
       matchcountarray[ai0index][ai1index] = matchcountarray[ai0index][ai1index] + 1
       if ai0index != ai1index:
          matchcountarray[ai1index][ai0index] = matchcountarray[ai1index][ai0index] + 1
    return matchcountarray
+
+# ideally, we should index from ai to index, but you can't hash dicts... need to rethink that
+def getindex( indextoai, ai ):
+   for index in indextoai.keys():
+      if indextoai[index]['ai_name'] == ai['ai_name'] and indextoai[index]['ai_version'] == ai['ai_version']:
+         return index
+   return None
 
 # does for all leagues
 def schedulematches():

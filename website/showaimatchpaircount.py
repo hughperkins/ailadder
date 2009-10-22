@@ -42,14 +42,17 @@ if leaguename == None:
 else:
    league = leaguehelper.getLeague(leaguename)
 
-ais = aihelper.getAIs()
-[aitoindex,indextoai] = matchscheduler.getaiindexes(ais)
-aipairmatchcount = matchscheduler.getaipairmatchcount( sqlalchemysetup.session.query( MatchRequest ),league, ais, aitoindex )
+ais = gridclienthelper.getproxy().getais()
+[success, matchrequestqueue] = gridclienthelper.getproxy().getmatchrequestqueuev1()
+[success, matchresults] = gridclienthelper.getproxy().getmatchresultsv1()
+
+indextoai = matchscheduler.getindextoai(ais)
+aipairqueuedmatchcount = matchscheduler.getaipairmatchcount( matchrequestqueue,league, ais, indextoai )
 leaguenames = listhelper.tuplelisttolist( sqlalchemysetup.session.query( League.league_name ) )
-aipairfinishedcount = matchscheduler.getaipairmatchcount( sqlalchemysetup.session.query( MatchRequest ).filter( MatchRequest.matchresult != None),league, ais, aitoindex )
+aipairfinishedcount = matchscheduler.getaipairmatchcount( matchresults,league, ais, indextoai )
 leaguenames = listhelper.tuplelisttolist( sqlalchemysetup.session.query( League.league_name ) )
 
-jinjahelper.rendertemplate( 'showaimatchpaircount.html', aipairmatchcount = aipairmatchcount, aipairfinishedcount = aipairfinishedcount, aitoindex = aitoindex, indextoai = indextoai, ais = ais, leaguenames = leaguenames, league = league )
+jinjahelper.rendertemplate( 'showaimatchpaircount.html', aipairqueuedmatchcount = aipairqueuedmatchcount, aipairfinishedcount = aipairfinishedcount, indextoai = indextoai, ais = ais, leaguenames = leaguenames, league = league, numais = len(ais), nummatchesperaipair = league.nummatchesperaipair )
 
 sqlalchemysetup.close()
 
