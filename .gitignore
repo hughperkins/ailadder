@@ -47,4 +47,8 @@ webserver/dependencies/SQLAlchemy-0.5.6/build
 webserver/dependencies/SQLAlchemy-0.5.6/dist
 webserver/dependencies/Jinja2-2.2.1/build
 webserver/dependencies/Jinja2-2.2.1/dist
+dependencies
 
+# sqlite db
+ailadder
+ailaddergrid
