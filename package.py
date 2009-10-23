@@ -64,8 +64,16 @@ def gitCommit(message):
    popen = subprocess.Popen( ["git", "commit", "-m", message ] )
    popen.wait()
 
+def gitTag( tagname ):
+   popen = subprocess.Popen( ["git", "tag", version ] )
+   popen.wait()
+
 def gitPush( destination ):
    popen = subprocess.Popen( ["git", "push", destination ] )
+   popen.wait()
+
+def gitPushBranch( destination, branch ):
+   popen = subprocess.Popen( ["git", "push", destination, branch ] )
    popen.wait()
 
 def scp( sourcefilepath, destinationfilepath ):
@@ -104,7 +112,9 @@ def go():
       gitAdd( scriptdir + "/botrunner/version.py" )
       gitAdd( scriptdir + "/webserver/website/core/version.py" )
       gitCommit( "Updated botrunner version" )
+      gitTag(version)
       gitPush('origin')
+      gitPushBranch('origin', version)
 
    botrunnerpackagefilepath = scriptdir + '/packages/botrunner_' + version + ".tar.bz2"
    gitArchiveToBz2( scriptdir + '/botrunner', botrunnerpackagefilepath )
