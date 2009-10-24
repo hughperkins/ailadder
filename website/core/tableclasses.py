@@ -235,6 +235,9 @@ class Config(Base):
    # to int, float, string or boolean
    def __init__(self, config_key, config_value ):
       self.config_key = config_key
+      self.setValue( config_value )
+
+   def setValue( self, config_value ):
       self.config_value = str(config_value)
       if type(config_value) == int:
          self.config_type = 'int'

@@ -25,10 +25,49 @@
 import sqlalchemysetup
 from tableclasses import *
 
+defaults = {
+   'guimarksessionasmaybedownafterthismanyminutes': 6
+} 
+
+def getKeys():
+   keys = []
+   for config in sqlalchemysetup.session.query(Config):
+      keys.append(config.config_key)
+   return keys
+
+def applydefaults():
+   global defaults
+   for key_name in defaults.keys():
+      configrow = sqlalchemysetup.session.query(Config).filter(Config.config_key == key_name).first()
+      if configrow == None:
+         setValue( key_name, defaults[key_name] )         
+
+# adds default for this value, and populates row in the database
+def populatedefault(key_name):
+   global defaults
+   configrow = sqlalchemysetup.session.query(Config).filter(Config.config_key == key_name).first()
+   if configrow != None:
+      return configrow.getValue()
+
+   if not defaults.has_key(key_name):
+      return None
+   newvalue = defaults[key_name]
+
+   setValue( key_name, newvalue )
+   return newvalue
+
 # get an appropriately typed config value, indexed by key_name
 def getValue( key_name ):
    configrow = sqlalchemysetup.session.query(Config).filter(Config.config_key == key_name ).first()
    if configrow == None:
-      return None
+      return populatedefault(key_name)
    return configrow.getValue()
+
+def setValue(key_name, key_value):
+   configrow = sqlalchemysetup.session.query(Config).filter(Config.config_key == key_name ).first()
+   if configrow == None:
+      config = Config(key_name, key_value)
+      sqlalchemysetup.session.add(config)
+   else:
+      configrow.setValue( key_value)
 
