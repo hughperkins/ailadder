@@ -44,6 +44,11 @@ http://www.opensource.org/licenses/gpl-license.php
    {% endfor %}
    &nbsp;
    </td>
+   {% if showform %}
+   <td>
+   <a href="deleteleague.py?leaguename={{league.league_name|e}}">Delete league</a>
+   <td>
+   {% endif %}
 
    </tr>
 {% endfor %}
