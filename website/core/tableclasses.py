@@ -25,7 +25,7 @@ import sqlalchemy
 import sqlalchemy.ext.declarative
 import sqlalchemy.orm
 
-from sqlalchemy import Column, String, Integer, ForeignKey, UniqueConstraint, and_
+from sqlalchemy import Column, String, Integer, ForeignKey, UniqueConstraint, and_, schema
 from sqlalchemy.orm import backref, relation
 
 from utils import *
@@ -40,7 +40,7 @@ class Role(Base):
       self.role_name = role_name
 
    role_id = Column(Integer,primary_key=True)
-   role_name = Column(String(255))
+   role_name = Column(String(255), unique = True)
 
 class RoleMember(Base):
    __tablename__ = 'role_members'
@@ -57,7 +57,7 @@ class Account(Base):
    __tablename__ = 'accounts'
 
    account_id = Column(Integer,primary_key=True)
-   username = Column(String(255))
+   username = Column(String(255), unique = True)
    userfullname = Column(String(255))
    useremailaddress = Column(String(255))
    passwordsalt = Column(String(255))
@@ -91,6 +91,8 @@ class AI(Base):
    ai_version = Column(String(255))
    ai_downloadurl = Column(String(255))
    ai_owneraccount_id = Column(Integer,ForeignKey('accounts.account_id'))
+
+   __table_args__ = (schema.UniqueConstraint('ai_name','ai_version'), {} )
 
    allowedmaps = relation("AIAllowedMap")
    allowedmods = relation("AIAllowedMod")
