@@ -28,7 +28,8 @@ from tableclasses import *
 defaults = {
    'gametimeoutminutes': 30,
    'gameendstring': "] Team%TEAMNUMBER%",
-   'cheatingstring': "] SkirmishAI (with team ID = %TEAMNUMBER%): Cheating enabled"
+   'cheatingstring': "] SkirmishAI (with team ID = %TEAMNUMBER%): Cheating enabled",
+   'springgridwebsite': "http://manageddreams.com/springgridstaging"
 } 
 
 def getKeys():
