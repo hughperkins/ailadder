@@ -23,7 +23,6 @@
 # I have an internet connectoin and can google for how to do that ;-)
 
 import sqlalchemysetup
-import tableclasses
 from tableclasses import *
 
 defaults = {
@@ -49,7 +48,7 @@ def getconfigdict():
 def applydefaults():
    global defaults
    for key_name in defaults.keys():
-      configrow = sqlalchemysetup.session.query(tableclasses.Config).filter(tableclasses.Config.config_key == key_name).first()
+      configrow = sqlalchemysetup.session.query(Config).filter(Config.config_key == key_name).first()
       if configrow == None:
          setValue( key_name, defaults[key_name] )         
 
@@ -85,9 +84,9 @@ def setValue(key_name, key_value):
    if not defaults.has_key(key_name):
       raise Exception('confighelper.setvalue, no such key_name: ' + key_name )
 
-   configrow = sqlalchemysetup.session.query(tableclasses.Config).filter(tableclasses.Config.config_key == key_name ).first()
+   configrow = sqlalchemysetup.session.query(Config).filter(Config.config_key == key_name ).first()
    if configrow == None:
-      config = tableclasses.Config(key_name, key_value)
+      config = Config(key_name, key_value)
       sqlalchemysetup.session.add(config)
    else:
       configrow.setValue( key_value)

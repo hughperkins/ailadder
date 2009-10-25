@@ -25,12 +25,11 @@ import sqlalchemy
 import sqlalchemy.ext.declarative
 import sqlalchemy.orm
 
-from sqlalchemy import Column, String, Integer, ForeignKey, and_
+from sqlalchemy import Column, String, Integer, ForeignKey, UniqueConstraint, and_
 from sqlalchemy.orm import backref, relation
 
 from utils import *
 import loginhelper
-import confighelper
 
 Base = sqlalchemy.ext.declarative.declarative_base()
 
@@ -158,7 +157,7 @@ class League(Base):
    __tablename__ = 'leagues'
 
    league_id = Column(Integer,primary_key = True )
-   league_name = Column(String(255))
+   league_name = Column(String(255), unique= True)
    league_creatorid = Column(Integer,ForeignKey('accounts.account_id'))
    map_name = Column(String(255))
    mod_name = Column(String(255))
@@ -189,7 +188,7 @@ class LeagueGroup(Base):
    __tablename__ = 'leaguegroups'
 
    leaguegroup_id = Column(Integer,primary_key = True)
-   leaguegroup_name = Column(String(255))
+   leaguegroup_name = Column(String(255), unique = True)
    leaguegroup_creatorid = Column(Integer,ForeignKey("accounts.account_id"))
    
    creator = relation("Account")
@@ -263,6 +262,8 @@ class Config(Base):
          return False
       
 def addstaticdata(session):
+   import confighelper # have to import it here, otherwise Config table can't be easily
+                       # imported inside confighelper, because circular import loop
    confighelper.applydefaults()
 
    # maybe roles static data could be created by core/roles.py?
