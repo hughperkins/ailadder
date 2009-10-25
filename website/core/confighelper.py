@@ -47,7 +47,12 @@ def applydefaults():
    for key_name in defaults.keys():
       configrow = sqlalchemysetup.session.query(Config).filter(Config.config_key == key_name).first()
       if configrow == None:
-         setValue( key_name, defaults[key_name] )         
+         setValue( key_name, defaults[key_name] )    
+   # purge extraneous values
+   for configrow in sqlalchemysetup.session.query(Config):
+      if not defaults.has_key(configrow.config_key):
+         sqlalchemysetup.session.delete(configrow)
+   sqlalchemysetup.session.flush()
 
 # adds default for this value, and populates row in the database
 def populatedefault(key_name):
