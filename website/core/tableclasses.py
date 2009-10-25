@@ -30,6 +30,7 @@ from sqlalchemy.orm import backref, relation
 
 from utils import *
 import loginhelper
+import confighelper
 
 Base = sqlalchemy.ext.declarative.declarative_base()
 
@@ -148,7 +149,7 @@ class AIOption(Base):
    __tablename__ = 'aioptions'
 
    option_id = Column(Integer,primary_key=True)
-   option_name = Column(String(255))
+   option_name = Column(String(255), unique = True)
 
    def __init__(self, option_name):
       self.option_name = option_name

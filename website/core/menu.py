@@ -43,6 +43,7 @@ def getmenus():
       ['View available maps', 'viewmaps.py'],
       ['View available mods', 'viewmods.py'],
       ['View available ais', 'viewais.py'],
+      ['View available options', 'viewoptions.py'],
       ['View accounts', 'viewaccounts.py'],
       ['View global configuration', 'viewconfig.py']
    ]])
