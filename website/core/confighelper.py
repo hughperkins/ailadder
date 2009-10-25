@@ -26,7 +26,9 @@ import sqlalchemysetup
 from tableclasses import *
 
 defaults = {
-   'guimarksessionasmaybedownafterthismanyminutes': 6
+   'gametimeoutminutes': 30,
+   'gameendstring': "] Team%TEAMNUMBER%",
+   'cheatingstring': "] SkirmishAI (with team ID = %TEAMNUMBER%): Cheating enabled"
 } 
 
 def getKeys():
@@ -34,6 +36,13 @@ def getKeys():
    for config in sqlalchemysetup.session.query(Config):
       keys.append(config.config_key)
    return keys
+
+def getconfigdict():
+   applydefaults()
+   dict = {}
+   for config in sqlalchemysetup.session.query(Config):
+      dict[config.config_key] = config.getValue()
+   return dict
 
 def applydefaults():
    global defaults
@@ -58,12 +67,22 @@ def populatedefault(key_name):
 
 # get an appropriately typed config value, indexed by key_name
 def getValue( key_name ):
+   global defaults
+
+   if not defaults.has_key(key_name):
+      raise Exception('confighelper.setvalue, no such key_name: ' + key_name )
+
    configrow = sqlalchemysetup.session.query(Config).filter(Config.config_key == key_name ).first()
    if configrow == None:
       return populatedefault(key_name)
    return configrow.getValue()
 
 def setValue(key_name, key_value):
+   global defaults
+
+   if not defaults.has_key(key_name):
+      raise Exception('confighelper.setvalue, no such key_name: ' + key_name )
+
    configrow = sqlalchemysetup.session.query(Config).filter(Config.config_key == key_name ).first()
    if configrow == None:
       config = Config(key_name, key_value)
