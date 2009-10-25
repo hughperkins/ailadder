@@ -44,6 +44,7 @@ def getmenus():
       ['View available mods', 'viewmods.py'],
       ['View available ais', 'viewais.py'],
       ['View accounts', 'viewaccounts.py'],
+      ['View global configuration', 'viewconfig.py']
    ]])
 
    menus.append([ 'Help', [
