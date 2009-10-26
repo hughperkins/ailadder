@@ -3,9 +3,9 @@ what is being worked on at the moment:
   scheduling
 
 todo:
-- add configuration page to website
-- add subscription to each league for each ai
-- add scheduler, to queue up matchrequests for each league
+- add config file handling for AIs
+- add logfile handling for AIs
+- migrate association tables to use sqlalchemy dedicated syntax
 - add results calculator
 - some way of passing options through to ai (via script.txt?)
 - be able to configure arm vs core vs ... vs random
@@ -13,6 +13,7 @@ todo:
 low:
 
 ideas:
+- add subscription to each league for each ai
 - use webservice for website submit stuff?
 - urlize stuff?
 
@@ -38,6 +39,10 @@ not sure if actually necessary (so: to test/investigate):
 - add gameendstring to per-mod config
 
 done:
+- add scheduler, to queue up matchrequests for each league
+- migrate scheduling to ailadder gridclient
+- add unique constraints to tableclasses
+- add configuration page to website
 - botrunner gets list of current maps, mods and ais from website, and only registers
   ones that don't exist already
 - migrate to jinja2
