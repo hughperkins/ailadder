@@ -17,10 +17,10 @@
 {% for request in requests %}
    <tr>
    <td>{{request.matchrequest_id}}</td>
-   <td>{{request.ais[0].ai_name|e}}</td>
-   <td>{{request.ais[0].ai_version|e}}</td>
-   <td>{{request.ais[1].ai_name|e}}</td>
-   <td>{{request.ais[1].ai_version|e}}</td>
+   <td>{{request['ais'][0].ai_name|e}}</td>
+   <td>{{request['ais'][0].ai_version|e}}</td>
+   <td>{{request['ais'][1].ai_name|e}}</td>
+   <td>{{request['ais'][1].ai_version|e}}</td>
    <td>{{request.map_name|e}}</td>
    <td>{{request.mod_name|e}}</td>
    <td>

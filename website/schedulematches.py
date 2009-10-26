@@ -36,35 +36,25 @@ sqlalchemysetup.setup()
 loginhelper.processCookie()
 
 def go():
-   leaguenames = listhelper.tuplelisttolist( sqlalchemysetup.session.query( League.league_name ) )
-   if len(leaguenames) == 0:
-      jinjahelper.message("Please create a league first.")
-      return
-
    leaguename = formhelper.getValue('leaguename')
    if leaguename == None:
-      leaguename = leaguenames[0]
+      jinjahelper.message("Please select a league and try again")
+      return
+
+   if not loginhelper.isLoggedOn():   # this is pretty feeble, should make this a role...
+      jinjahelper.message("Please log on first.")
+      return
 
    league = leaguehelper.getLeague(leaguename)
-
-   gridais = gridclienthelper.getproxy().getais()
-
-   for gridai in gridais:
-      aihelper.addaiifdoesntexist( gridai['ai_name'], gridai['ai_version'] )
-   sqlalchemysetup.session.flush()
 
    [success, matchrequestqueue] = gridclienthelper.getproxy().getmatchrequestqueuev1()
    [success, matchresults] = gridclienthelper.getproxy().getmatchresultsv1()
 
    ais = leaguehelper.getleagueais( league )
 
-   indextoai = matchscheduler.getindextoai(league)
-   aipairqueuedmatchcount = matchscheduler.getaipairmatchcount( matchrequestqueue,league, ais, indextoai )
-   aipairfinishedcount = matchscheduler.getaipairmatchcount( matchresults,league, ais, indextoai )
+   matchscheduler.schedulematchesforleague( league, matchrequestqueue, matchresults )
 
-   showform = loginhelper.isLoggedOn()
-
-   jinjahelper.rendertemplate( 'showaimatchpaircount.html', aipairqueuedmatchcount = aipairqueuedmatchcount, aipairfinishedcount = aipairfinishedcount, indextoai = indextoai, ais = ais, leaguenames = leaguenames, league = league, numais = len(ais), nummatchesperaipair = league.nummatchesperaipair, showform = showform )
+   jinjahelper.message("Matches scheduled")
 
 go()
 

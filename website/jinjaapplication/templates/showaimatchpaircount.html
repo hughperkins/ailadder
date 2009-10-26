@@ -67,5 +67,11 @@ Pick a league: <form method="post" action="showaimatchpaircount.py">{{formhelper
 {% endfor %}
 </table>
 
+{% if showform %}
+<h2>Schedule matches</h2>
+
+<a href="schedulematches.py?leaguename={{league.league_name}}">Click here to schedule matches</a>
+{% endif %}
+
 {% endblock content %}
 

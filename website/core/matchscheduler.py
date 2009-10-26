@@ -32,24 +32,25 @@ from tableclasses import *
 import sqlalchemysetup
 import leaguehelper
 import aihelper
-import matchrequestcontroller
+import matchrequestcontroller_gridclient
 
 # does for one league
-def schedulematchesforleague( leaguename ):
-   league = leaguehelper.getLeague(leaguename)
-   ais = aihelper.getAIs()
-   [ aitoindex, indextoai ] = getaiindexes(ais)
-   aipairmatchcount = getaipairmatchcount(sqlalchemysetup.session.query( MatchRequest ), league, ais, aitoindex)
-   for outerai in ais:
-      for innerai in ais:
-         if aipairmatchcount[aitoindex[outerai]][aitoindex[innerai]] < league.nummatchesperaipair:
-            for i in xrange( league.nummatchesperaipair - aipairmatchcount[aitoindex[outerai]][aitoindex[innerai]] ):
-               scheduleleaguematch( league, outerai, innerai )
-            aipairmatchcount[aitoindex[outerai]][aitoindex[innerai]] = league.nummatchesperaipair
-            aipairmatchcount[aitoindex[innerai]][aitoindex[outerai]] = league.nummatchesperaipair
+def schedulematchesforleague( league, matchrequestqueue, matchresults ):
+   ais = leaguehelper.getleagueais( league )
+   indextoai = getindextoai(league)
+   aiqueuedpairmatchcount = getaipairmatchcount(matchrequestqueue, league, ais, indextoai )
+   aifinishedpairmatchcount = getaipairmatchcount(matchresults, league, ais, indextoai )
+   for outeraiindex in xrange(len(ais)):
+      for inneraiindex in xrange(len(ais)):
+         totalrequestcount = aiqueuedpairmatchcount[outeraiindex][inneraiindex] + aifinishedpairmatchcount[outeraiindex][inneraiindex]
+         if totalrequestcount < league.nummatchesperaipair:
+            for i in xrange( league.nummatchesperaipair - totalrequestcount ):
+               scheduleleaguematch( league, indextoai[outeraiindex], indextoai[inneraiindex] )
+            aiqueuedpairmatchcount[outeraiindex][inneraiindex] = league.nummatchesperaipair - aifinishedpairmatchcount[outeraiindex][inneraiindex]
+            aiqueuedpairmatchcount[inneraiindex][outeraiindex] = league.nummatchesperaipair - aifinishedpairmatchcount[outeraiindex][inneraiindex]
 
 def scheduleleaguematch( league, ai0, ai1 ):
-   matchrequestcontroller.addmatchrequest( ai0 = ai0, ai1 = ai1, map = league.map, mod = league.mod, league = league )
+   matchrequestcontroller_gridclient.addmatchrequest( ai0 = ai0, ai1 = ai1, map_name = league.map_name, mod_name = league.mod_name, league = league )
 
 # returns [ dict from ai to zero-based aiindex, dict from index to ai ]
 # only returns ais that match the league, ie have at least the same options as league
@@ -95,12 +96,12 @@ def getaipairmatchcount(requests, league, ais, indextoai ):
 # ideally, we should index from ai to index, but you can't hash dicts... need to rethink that
 def getindex( indextoai, ai ):
    for index in indextoai.keys():
-      if indextoai[index]['ai_name'] == ai['ai_name'] and indextoai[index]['ai_version'] == ai['ai_version']:
+      if indextoai[index].ai_name == ai['ai_name'] and indextoai[index].ai_version == ai['ai_version']:
          return index
    return None
 
 # does for all leagues
 def schedulematches():
    for league in sqlalchemysetup.session.query(League):
-      schedulematchesforleague(league.league_name )
+      schedulematchesforleague(league )
 

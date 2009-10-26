@@ -2,7 +2,7 @@
 # import core.foo as foo
 
 # This lets us do 'from core import *':
-__all__ = ['roles', 'botrunnerhelper','matchrequestcontroller',
+__all__ = ['roles', 'botrunnerhelper','matchrequestcontroller_gridclient',
    'replaycontroller', 'menu', 'version', 'maphelper', 'modhelper','aihelper',
    'loginhelper', 'sqlalchemysetup', 'tableclasses', 'accounthelper', 'leaguehelper', 'confighelper', 'jinjahelper', 'matchscheduler', 'gridclienthelper' ]
 
