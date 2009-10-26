@@ -38,14 +38,14 @@ Pick a league: <form method="post" action="showaimatchpaircount.py">{{formhelper
 <h2>AI pair match count</h2>
 
 <table cellpadding="3">
-<tr><td class='tablehead'>(matches finished) / ( matches finished + matches queued)</td>
+<tr><td class='tablehead'>(matches finished) / matches required for league</td>
    {% for inneraiindex in range(numais) %}
       <td class='tablehead'>{{indextoai[inneraiindex].ai_name}} {{indextoai[inneraiindex].ai_version}}</td>
    {% endfor %}
 {% for outeraiindex in range(numais) %}
    <tr><td class='tablehead'>{{indextoai[outeraiindex].ai_name}} {{indextoai[outeraiindex].ai_version}}</td>
    {% for inneraiindex in range(numais) %}
-      <td {% if aipairfinishedcount[outeraiindex][inneraiindex] >= nummatchesperaipair  %}class='success'{% endif %}>{{aipairfinishedcount[outeraiindex][inneraiindex]}} / {{aipairqueuedmatchcount[outeraiindex][inneraiindex] + aipairfinishedcount[outeraiindex][inneraiindex]}}</td>
+      <td {% if aipairfinishedcount[outeraiindex][inneraiindex] >= nummatchesperaipair  %}class='success'{% endif %}>{{aipairfinishedcount[outeraiindex][inneraiindex]}} / {{nummatchesperaipair}}</td>
    {% endfor %}
    </tr>
 {% endfor %}
