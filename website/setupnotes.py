@@ -26,5 +26,10 @@ import cgitb; cgitb.enable()
 from utils import *
 from core import *
 
+sqlalchemysetup.setup()
+
 jinjahelper.message( "<pre>" + filehelper.readFile("howtouse.txt") + "</pre>" )
+
+sqlalchemysetup.close()
+
 

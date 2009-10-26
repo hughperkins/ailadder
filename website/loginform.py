@@ -29,5 +29,9 @@ import cgi
 from utils import *
 from core import *
 
+sqlalchemysetup.setup()
+
 jinjahelper.rendertemplate('loginform.html', menus = menu.getmenus())
+
+sqlalchemysetup.close()
 
