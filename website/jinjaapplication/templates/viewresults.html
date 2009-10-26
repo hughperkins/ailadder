@@ -22,10 +22,10 @@
 {% for result in results %}
    <tr {% if loop.even %}class="alt"{% endif %}>
    <td>{{result.matchrequest_id}}</td>
-   <td>{{result.ais[0].ai_name|e}}</td>
-   <td>{{result.ais[0].ai_version|e}}</td>
-   <td>{{result.ais[1].ai_name|e}}</td>
-   <td>{{result.ais[1].ai_version|e}}</td>
+   <td {% if result.matchresult == 'ai0won' %}class='success'{% endif %}>{{result.ais[0].ai_name|e}}</td>
+   <td {% if result.matchresult == 'ai0won' %}class='success'{% endif %}>{{result.ais[0].ai_version|e}}</td>
+   <td {% if result.matchresult == 'ai1won' %}class='success'{% endif %}>{{result.ais[1].ai_name|e}}</td>
+   <td {% if result.matchresult == 'ai1won' %}class='success'{% endif %}>{{result.ais[1].ai_version|e}}</td>
    <td>{{result.map_name|e}}</td>
    <td>{{result.mod_name|e}}</td>
    <td>
