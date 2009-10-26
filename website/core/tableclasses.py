@@ -40,7 +40,7 @@ class Role(Base):
       self.role_name = role_name
 
    role_id = Column(Integer,primary_key=True)
-   role_name = Column(String(255), unique = True)
+   role_name = Column(String(255), unique = True, nullable = False)
 
 class RoleMember(Base):
    __tablename__ = 'role_members'
@@ -57,11 +57,11 @@ class Account(Base):
    __tablename__ = 'accounts'
 
    account_id = Column(Integer,primary_key=True)
-   username = Column(String(255), unique = True)
+   username = Column(String(255), unique = True, nullable = False)
    userfullname = Column(String(255))
    useremailaddress = Column(String(255))
-   passwordsalt = Column(String(255))
-   passwordhash = Column(String(255))
+   passwordsalt = Column(String(255), nullable = False)
+   passwordhash = Column(String(255), nullable = False)
 
    roles = relation("RoleMember")
 
@@ -87,8 +87,8 @@ class AI(Base):
    __tablename__ = 'ais'
 
    ai_id = Column(Integer,primary_key=True)
-   ai_name = Column(String(255))
-   ai_version = Column(String(255))
+   ai_name = Column(String(255), nullable = False)
+   ai_version = Column(String(255), nullable = False)
    ai_downloadurl = Column(String(255))
    ai_owneraccount_id = Column(Integer,ForeignKey('accounts.account_id'))
 
@@ -142,7 +142,7 @@ class Cookie(Base):
    cookiereference = Column(String(255),primary_key=True)
    #username = Column(String(255))
    # we can change to use account_id in the future
-   account_id = Column(Integer,ForeignKey('accounts.account_id'))
+   account_id = Column(Integer,ForeignKey('accounts.account_id'), nullable = False)
 
    account = relation("Account")
 
@@ -150,7 +150,7 @@ class AIOption(Base):
    __tablename__ = 'aioptions'
 
    option_id = Column(Integer,primary_key=True)
-   option_name = Column(String(255), unique = True)
+   option_name = Column(String(255), unique = True, nullable = False)
 
    def __init__(self, option_name):
       self.option_name = option_name
@@ -159,11 +159,11 @@ class League(Base):
    __tablename__ = 'leagues'
 
    league_id = Column(Integer,primary_key = True )
-   league_name = Column(String(255), unique= True)
+   league_name = Column(String(255), unique= True, nullable = False)
    league_creatorid = Column(Integer,ForeignKey('accounts.account_id'))
-   map_name = Column(String(255))
-   mod_name = Column(String(255))
-   nummatchesperaipair = Column(Integer)
+   map_name = Column(String(255), nullable = False)
+   mod_name = Column(String(255), nullable = False)
+   nummatchesperaipair = Column(Integer, nullable = False)
 
    creator = relation("Account")
    options = relation("LeagueOption")
@@ -190,7 +190,7 @@ class LeagueGroup(Base):
    __tablename__ = 'leaguegroups'
 
    leaguegroup_id = Column(Integer,primary_key = True)
-   leaguegroup_name = Column(String(255), unique = True)
+   leaguegroup_name = Column(String(255), unique = True, nullable = False)
    leaguegroup_creatorid = Column(Integer,ForeignKey("accounts.account_id"))
    
    creator = relation("Account")
@@ -230,8 +230,8 @@ class Config(Base):
    __tablename__ = 'config'
 
    config_key = Column(String(255),primary_key = True )
-   config_value = Column(String(255))
-   config_type = Column(String(255))
+   config_value = Column(String(255), nullable = False)
+   config_type = Column(String(255), nullable = False)
 
    # sets value of config_type appropriately, according to config_value type
    # to int, float, string or boolean
