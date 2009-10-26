@@ -19,6 +19,10 @@ div.contents {
    left: 50px;
 }
 
+div.footer {
+   padding: 50pt 0pt 50pt 0pt;
+}
+
 div.menu {
    float: left;   
    width: 175px;
