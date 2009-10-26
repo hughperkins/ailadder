@@ -42,11 +42,18 @@ if leaguename == None:
 else:
    league = leaguehelper.getLeague(leaguename)
 
-ais = gridclienthelper.getproxy().getais()
+gridais = gridclienthelper.getproxy().getais()
+
+for gridai in gridais:
+   aihelper.addaiifdoesntexist( gridai['ai_name'], gridai['ai_version'] )
+sqlalchemysetup.session.flush()
+
 [success, matchrequestqueue] = gridclienthelper.getproxy().getmatchrequestqueuev1()
 [success, matchresults] = gridclienthelper.getproxy().getmatchresultsv1()
 
-indextoai = matchscheduler.getindextoai(ais)
+ais = leaguehelper.getleagueais( league )
+
+indextoai = matchscheduler.getindextoai(league)
 aipairqueuedmatchcount = matchscheduler.getaipairmatchcount( matchrequestqueue,league, ais, indextoai )
 leaguenames = listhelper.tuplelisttolist( sqlalchemysetup.session.query( League.league_name ) )
 aipairfinishedcount = matchscheduler.getaipairmatchcount( matchresults,league, ais, indextoai )

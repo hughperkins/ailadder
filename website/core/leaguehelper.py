@@ -30,3 +30,23 @@ def getLeague( league_name ):
 def getLeagueGroup( leaguegroup_name ):
    return sqlalchemysetup.session.query(LeagueGroup).filter( LeagueGroup.leaguegroup_name == leaguegroup_name ).first()
 
+# return only ais that comply with league conditions
+def getleagueais( league ):
+   ais = sqlalchemysetup.session.query(AI).all()
+   ailist = []
+
+   for ai in ais:
+      aihasalloptions = True
+      for leagueoption in league.options:
+         aihasthisoption = False
+         for aioption in ai.allowedoptions:
+            if aioption.option.option_name == leagueoption.option.option_name:
+               aihasthisoption = True
+         if not aihasthisoption:
+            aihasalloptions = False
+      if aihasalloptions:
+         ailist.append(ai)
+
+   return ailist
+   
+

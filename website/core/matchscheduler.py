@@ -52,12 +52,13 @@ def scheduleleaguematch( league, ai0, ai1 ):
    matchrequestcontroller.addmatchrequest( ai0 = ai0, ai1 = ai1, map = league.map, mod = league.mod, league = league )
 
 # returns [ dict from ai to zero-based aiindex, dict from index to ai ]
-def getindextoai(ais):
+# only returns ais that match the league, ie have at least the same options as league
+def getindextoai(league ):
    # assume this query is cached in memory, so fine to redo
    #aitoindex = {}  # dict from ai to aiindex
    indextoai = {} # dict from index to ai
+   ais = leaguehelper.getleagueais( league )
    for ai in ais:
-      #aitoindex[ ai ] = len(aitoindex)
       indextoai[ len(indextoai) ] = ai
    #return [ aitoindex, indextoai ]
    return indextoai
