@@ -8,7 +8,7 @@ Request counts per league
 
 <p>This page is mainly for debugging, at least for now.</p>
 
-Pick a league: <form method="post" action="showaimatchpaircount.py">{{formhelper.listtodropdown('leaguename', leaguenames)}}
+Pick a league: <form method="post" action="showaimatchpaircount.py">{{formhelper.listtodropdownwithselected('leaguename', leaguenames,league.league_name)}}
 <input type="submit" value="Reload" />
 </form>
 
@@ -38,7 +38,7 @@ Pick a league: <form method="post" action="showaimatchpaircount.py">{{formhelper
 <h2>AI pair completed match count</h2>
 
 <table cellpadding="3">
-<tr><td class='tablehead'>(matches finished) / matches required for league</td>
+<tr><td class='tablehead'>matches finished / matches required for league</td>
    {% for inneraiindex in range(numais) %}
       <td class='tablehead'>{{indextoai[inneraiindex].ai_name}} {{indextoai[inneraiindex].ai_version}}</td>
    {% endfor %}
@@ -54,7 +54,7 @@ Pick a league: <form method="post" action="showaimatchpaircount.py">{{formhelper
 <h2>AI pair (scheduled + completed) match count</h2>
 
 <table cellpadding="3">
-<tr><td class='tablehead'>(matches finished) / matches required for league</td>
+<tr><td class='tablehead'>(matches finished + queued) / matches required for league</td>
    {% for inneraiindex in range(numais) %}
       <td class='tablehead'>{{indextoai[inneraiindex].ai_name}} {{indextoai[inneraiindex].ai_version}}</td>
    {% endfor %}

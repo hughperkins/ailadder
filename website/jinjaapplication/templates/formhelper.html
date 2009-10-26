@@ -6,6 +6,16 @@
 </select>
 {% endmacro %}
 
+{% macro listtodropdownwithselected(controlname, itemlist,selecteditem) %}
+<select name='{{controlname}}'>
+   {% for listitem in itemlist %}
+      <option value='{{listitem|e}}'
+         {% if listitem == selecteditem %}selected="selected"{% endif %}
+         >{{listitem|e}}</option>
+   {% endfor %}
+</select>
+{% endmacro %}
+
 {% macro itemsandvaluestodropdown( controlname, itemlist, valuelist ) %}
    <select name='{{controlname}}'>
    {% for item in itemlist %}
