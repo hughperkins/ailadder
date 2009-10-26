@@ -53,10 +53,18 @@ def go():
       aihelper.addaiifdoesntexist( gridai['ai_name'], gridai['ai_version'] )
    sqlalchemysetup.session.flush()
 
+   ais = leaguehelper.getleagueais( league )
+
    [success, matchrequestqueue] = gridclienthelper.getproxy().getmatchrequestqueuev1()
    [success, matchresults] = gridclienthelper.getproxy().getmatchresultsv1()
-
-   ais = leaguehelper.getleagueais( league )
+   [success, mapok ] = gridclienthelper.getproxy().mapexists( league.map_name )
+   #if not mapok:
+   #   jinjahelper.message("League " + leaguename + " uses a currently unavailable map: " + league.map_name)
+   #   return
+   [success, modok ] = gridclienthelper.getproxy().modexists( league.mod_name )
+   #if not modok:
+   #   jinjahelper.message("League " + leaguename + " uses a currently unavailable mod: " + league.mod_name)
+   #   return
 
    indextoai = matchscheduler.getindextoai(league)
    aipairqueuedmatchcount = matchscheduler.getaipairmatchcount( matchrequestqueue,league, ais, indextoai )
@@ -64,7 +72,7 @@ def go():
 
    showform = loginhelper.isLoggedOn()
 
-   jinjahelper.rendertemplate( 'showaimatchpaircount.html', aipairqueuedmatchcount = aipairqueuedmatchcount, aipairfinishedcount = aipairfinishedcount, indextoai = indextoai, ais = ais, leaguenames = leaguenames, league = league, numais = len(ais), nummatchesperaipair = league.nummatchesperaipair, showform = showform )
+   jinjahelper.rendertemplate( 'showaimatchpaircount.html', aipairqueuedmatchcount = aipairqueuedmatchcount, aipairfinishedcount = aipairfinishedcount, indextoai = indextoai, ais = ais, leaguenames = leaguenames, league = league, numais = len(ais), nummatchesperaipair = league.nummatchesperaipair, mapok = mapok, modok = modok, showform = showform )
 
 go()
 
