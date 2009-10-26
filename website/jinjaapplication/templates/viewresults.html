@@ -35,7 +35,7 @@
    &nbsp;
    </td>
    <td>{{result.botrunner_name|e}}</td>
-   <td>{{result.matchresult|e}}</td>
+   <td {% if result.matchresult == 'crashed' %}class='fail'{% else %}{% endif %}>{{result.matchresult|e}}</td>
    <td>
    {% if result.infologrelativeurl is defined %}
       <a href='{{springgridurl}}/{{result.infologrelativeurl|e}}'>infolog</a>
