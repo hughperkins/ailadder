@@ -41,8 +41,8 @@ else:
 
    if aiversion != None and ainame != None and aioption != None and ainame != "" and aiversion != "" and aioption != "":
       ai = aihelper.getAI( ainame, aiversion )
-      ai.allowedoptions.append(AIAllowedOption( aihelper.getAIOption( aioption ) ) )
-      sqlalchemysetup.session.commit()
+      ai.allowedoptions.append( aihelper.getAIOption( aioption ) )
+      sqlalchemysetup.session.flush()
       jinjahelper.message( "Added ok" )
    else:
       jinjahelper.message( "Please fill in the fields and try again" )

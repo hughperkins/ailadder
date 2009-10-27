@@ -40,7 +40,7 @@ showform = roles.isInRole(roles.aiadmin)
 
 potentialoptions = listhelper.tuplelisttolist( sqlalchemysetup.session.query(AIOption.option_name) )
 for option in ai.allowedoptions:
-   potentialoptions.remove(option.option.option_name )
+   potentialoptions.remove(option.option_name )
   
 jinjahelper.rendertemplate('viewai.html', ai = ai, potentialoptions = potentialoptions, showform = showform )
 

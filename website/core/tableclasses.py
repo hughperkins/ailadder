@@ -25,7 +25,7 @@ import sqlalchemy
 import sqlalchemy.ext.declarative
 import sqlalchemy.orm
 
-from sqlalchemy import Column, String, Integer, ForeignKey, UniqueConstraint, and_, schema
+from sqlalchemy import Column, String, Integer, ForeignKey, UniqueConstraint, and_, schema, Table
 from sqlalchemy.orm import backref, relation
 
 from utils import *
@@ -42,16 +42,11 @@ class Role(Base):
    role_id = Column(Integer,primary_key=True)
    role_name = Column(String(255), unique = True, nullable = False)
 
-class RoleMember(Base):
-   __tablename__ = 'role_members'
-
-   role_id = Column(Integer,ForeignKey('roles.role_id'),primary_key=True)
-   account_id = Column(Integer,ForeignKey('accounts.account_id'),primary_key=True)
-
-   role = relation("Role")
-
-   def __init__(self, role ):
-      self.role = role
+account_roles = Table('role_members', Base.metadata,
+   Column('role_id', Integer,ForeignKey('roles.role_id'),nullable=False),
+   Column('account_id', Integer,ForeignKey('accounts.account_id'),nullable=False),
+   UniqueConstraint('role_id','account_id')
+)
 
 class Account(Base):
    __tablename__ = 'accounts'
@@ -63,7 +58,7 @@ class Account(Base):
    passwordsalt = Column(String(255), nullable = False)
    passwordhash = Column(String(255), nullable = False)
 
-   roles = relation("RoleMember")
+   roles = relation("Role", secondary = account_roles )
 
    def __init__(self, username, userfullname, password ):
       self.username = username
@@ -80,29 +75,7 @@ class Account(Base):
       self.passwordhash = md5.md5( newpassword + self.passwordsalt ).hexdigest()
 
    def addRole( self, role ):
-      rolemember = RoleMember( role )
-      self.roles.append(rolemember)
-
-class AI(Base):
-   __tablename__ = 'ais'
-
-   ai_id = Column(Integer,primary_key=True)
-   ai_name = Column(String(255), nullable = False)
-   ai_version = Column(String(255), nullable = False)
-   ai_downloadurl = Column(String(255))
-   ai_owneraccount_id = Column(Integer,ForeignKey('accounts.account_id'))
-
-   __table_args__ = (schema.UniqueConstraint('ai_name','ai_version'), {} )
-
-   allowedmaps = relation("AIAllowedMap")
-   allowedmods = relation("AIAllowedMod")
-   allowedoptions = relation("AIAllowedOption")
-
-   owneraccount = relation("Account")
-
-   def __init__( self, ai_name, ai_version ):
-      self.ai_name = ai_name
-      self.ai_version = ai_version
+      self.roles.append(role)
 
 class AIAllowedMap(Base):
    __tablename__ = 'ai_allowedmaps'
@@ -120,17 +93,32 @@ class AIAllowedMod(Base):
 
    ai = relation("AI")
 
-class AIAllowedOption(Base):
-   __tablename__ = 'ai_allowedoptions'
+ai_allowedoptions = Table('ai_allowedoptions', Base.metadata,
+   Column('ai_id', Integer, ForeignKey('ais.ai_id'),nullable = False ),
+   Column('option_id',Integer,ForeignKey('aioptions.option_id'),nullable = False),
+   UniqueConstraint('ai_id', 'option_id')
+)
 
-   ai_id = Column(Integer,ForeignKey('ais.ai_id'),primary_key=True)
-   option_id = Column(Integer,ForeignKey('aioptions.option_id'),primary_key=True)
+class AI(Base):
+   __tablename__ = 'ais'
 
-   ai = relation("AI")
-   option = relation("AIOption")
+   ai_id = Column(Integer,primary_key=True)
+   ai_name = Column(String(255), nullable = False)
+   ai_version = Column(String(255), nullable = False)
+   ai_downloadurl = Column(String(255))
+   ai_owneraccount_id = Column(Integer,ForeignKey('accounts.account_id'))
 
-   def __init__ ( self, option ):
-      self.option = option
+   __table_args__ = (schema.UniqueConstraint('ai_name','ai_version'), {} )
+
+   allowedmaps = relation("AIAllowedMap")
+   allowedmods = relation("AIAllowedMod")
+   allowedoptions = relation("AIOption", secondary = ai_allowedoptions)
+
+   owneraccount = relation("Account")
+
+   def __init__( self, ai_name, ai_version ):
+      self.ai_name = ai_name
+      self.ai_version = ai_version
 
 class Cookie(Base):
    __tablename__ = 'cookies'
@@ -155,6 +143,12 @@ class AIOption(Base):
    def __init__(self, option_name):
       self.option_name = option_name
 
+leagueoptions = Table( 'leagueoptions', Base.metadata,
+   Column('league_id', Integer,ForeignKey('leagues.league_id'),nullable = False),
+   Column('option_id', Integer,ForeignKey('aioptions.option_id'),nullable = False),
+   UniqueConstraint('league_id', 'option_id')
+)
+
 class League(Base):
    __tablename__ = 'leagues'
 
@@ -166,7 +160,7 @@ class League(Base):
    nummatchesperaipair = Column(Integer, nullable = False)
 
    creator = relation("Account")
-   options = relation("LeagueOption")
+   options = relation("AIOption", secondary = leagueoptions )
 
    def __init__( self, league_name, creator, mod_name, map_name, nummatchesperaipair ):
       self.league_name = league_name
@@ -175,16 +169,19 @@ class League(Base):
       self.map_name = map_name
       self.nummatchesperaipair = nummatchesperaipair
 
-class LeagueOption(Base):
-   __tablename__ = 'leagueoptions'
+# members who are leaguegruops
+leaguegroup_leaguemembers = Table( 'leaguegroup_leaguemembers', Base.metadata,
+   Column('leaguegroup_id', Integer,ForeignKey('leaguegroups.leaguegroup_id'),nullable = False),
+   Column('league_id', Integer,ForeignKey('leagues.league_id'),nullable = False),
+   UniqueConstraint('leaguegroup_id', 'league_id')
+)
 
-   league_id = Column(Integer,ForeignKey('leagues.league_id'),primary_key=True)
-   option_id = Column(Integer,ForeignKey('aioptions.option_id'),primary_key=True)
-
-   option = relation("AIOption")
-
-   def __init__(self, option ):
-      self.option = option
+# add this later ;-)
+#leaguegroup_leaguegroupmembers = Table( 'leaguegroup_leaguegroupmembers', Base.metadata,
+#   Column('leaguegroup_id', Integer,ForeignKey('leaguegroups.leaguegroup_id'),nullable = False),
+#   Column('childleaguegroup_id', Integer,ForeignKey('leaguegroups.leaguegroup_id'),nullable = False),
+#   UniqueConstraint('leaguegroup_id', 'childleaguegroup_id')
+#)
 
 class LeagueGroup(Base):
    __tablename__ = 'leaguegroups'
@@ -194,36 +191,11 @@ class LeagueGroup(Base):
    leaguegroup_creatorid = Column(Integer,ForeignKey("accounts.account_id"))
    
    creator = relation("Account")
-   childleagues = relation("LeagueGroupLeagueMember")
-   #childleaguegroups = relation("LeagueGroupLeagueGroupMember")
+   childleagues = relation("League", secondary = leaguegroup_leaguemembers )
+   # childleaguegroups = relation("LeagueGroup", secondary = leaguegroup_leaguegroupmembers )
 
    def __init__( self, leaguegroup_name ):
       self.leaguegroup_name = leaguegroup_name
-
-# members who are leaguegruops
-class LeagueGroupLeagueMember(Base):
-   __tablename__ = 'leaguegroup_leaguemembers'
-
-   leaguegroup_id = Column(Integer,ForeignKey('leaguegroups.leaguegroup_id'),primary_key = True)
-   league_id = Column(Integer,ForeignKey('leagues.league_id'),primary_key = True)
-
-   league = relation("League")
-
-   def __init__(self, league ):
-      self.league = league
-
-# members who are leagues (leaf nodes)
-def LeagueGroupLeagueGroupMember(Base):
-   __tablename__ = 'leaguegroup_leaguegroupmembers'
-
-   leaguegroup_id = Column(Integer,ForeignKey('leaguegroups.leaguegroup_id'),primary_key = True)
-   childleaguegroup_id = Column(Integer,ForeignKey('leaguegroups.leaguegroup_id'),primary_key=True)
-
-   parentleaguegroup = relation("LeagueGroup", primaryjoin = leaguegroup_id == LeagueGroup.leaguegroup_id, backrefs = 'childleaguegroups')
-   leaguegroup = relation("LeagueGroup", primaryjoin = childleaguegroup_id == LeagueGroup.leaguegroup_id)
-
-   def __init__(self, leaguegroup ):
-      self.leaguegroup = leaguegroup
 
 # simple flat config for now
 class Config(Base):

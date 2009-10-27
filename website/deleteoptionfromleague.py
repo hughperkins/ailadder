@@ -44,10 +44,13 @@ else:
 
    if leaguename != None and aioption != None and leaguename != "" and aioption != "":
       league = leaguehelper.getLeague( leaguename )
+      optiontoremove = None
       for option in league.options:
-         if option.option.option_name == aioption:
-            sqlalchemysetup.session.delete( option )
-      sqlalchemysetup.session.commit()
+         if option.option_name == aioption:
+            optiontoremove = option
+      if optiontoremove != None:
+         league.options.remove(optiontoremove)
+         sqlalchemysetup.session.commit()
       jinjahelper.message( "Removed ok" )
    else:
       jinjahelper.message( "Please fill in the fields and try again" )

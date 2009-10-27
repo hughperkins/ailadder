@@ -61,13 +61,15 @@ def isInRole2(username, rolename):
       return False
 
    # validate rolename:
-   rolerow = sqlalchemysetup.session.query(tableclasses.Role).filter(tableclasses.Role.role_name == rolename ).first()
+   rolerow = sqlalchemysetup.session.query(Role).filter(Role.role_name == rolename ).first()
    if rolerow == None:
       print "ERROR: invalid rolename specified"
       return False
 
-   rolerow = sqlalchemysetup.session.query(tableclasses.Role).select_from(join(join(tableclasses.Role,tableclasses.RoleMember),tableclasses.Account)).filter(tableclasses.Role.role_name == rolename ).filter(tableclasses.Account.username == username ).first()
-   return ( rolerow != None )
+   account = sqlalchemysetup.session.query(Account).\
+      filter(Account.username == username ).\
+      filter( Account.roles.any( role_name = rolename )).first()
+   return ( account != None )
 
 # self test function
 def test():

@@ -39,7 +39,7 @@ showform = roles.isInRole(roles.accountadmin)
 
 potentialroles = listhelper.tuplelisttolist( sqlalchemysetup.session.query(Role.role_name) )
 for role in account.roles:
-   potentialroles.remove( role.role.role_name )
+   potentialroles.remove( role.role_name )
 
 jinjahelper.rendertemplate('viewaccount.html', account = account, showform = showform, potentialroles = potentialroles )
 

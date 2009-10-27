@@ -42,13 +42,11 @@ else:
       account = accounthelper.getAccount( username )
       roletoremove = None
       for role in account.roles:
-         if role.role.role_name == rolename:
+         if role.role_name == rolename:
             roletoremove = role
       if roletoremove != None:
-         #sqlalchemysetup.session.delete(role.role)
-         sqlalchemysetup.session.delete(role)
-         #account.roles.remove( role )
-         sqlalchemysetup.session.commit()
+         account.roles.remove( roletoremove )
+         sqlalchemysetup.session.flush()
          jinjahelper.message( "Removed ok" )
    else:
       jinjahelper.message( "Please fill in the fields and try again" )

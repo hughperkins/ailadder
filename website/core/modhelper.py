@@ -54,17 +54,17 @@ def getsupportedmods( botrunnername ):
       return []
    supportedmodnames = []
    for mod in botrunner.supportedmods:
-      supportedmodnames.append(mod.mod.mod_name)
+      supportedmodnames.append(mod.mod_name)
    return supportedmodnames
 
 def setbotrunnersupportsthismod( botrunnername, modname ):
    # Now, register the mod as supported mod
    botrunner = botrunnerhelper.getBotRunner( botrunnername )
    for mod in botrunner.supportedmods:
-      if mod.mod.mod_name == modname:
+      if mod.mod_name == modname:
        return (True,'')
    mod = getMod(modname)
-   botrunner.supportedmods.append(BotRunnerSupportedMod(mod))
+   botrunner.supportedmods.append(mod)
    sqlalchemysetup.session.commit()
    return (True,'')
 

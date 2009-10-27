@@ -41,7 +41,7 @@ else:
    if leaguegroupname != None and leaguegroupname != '' and leaguename != None and leaguename != '':
       leaguegroup = leaguehelper.getLeagueGroup(leaguegroupname)
       league = leaguehelper.getLeague(leaguename)
-      leaguegroup.childleagues.append(LeagueGroupLeagueMember(league))
+      leaguegroup.childleagues.append( league )
       sqlalchemysetup.session.commit()
       jinjahelper.message( "Added ok" )
    else:

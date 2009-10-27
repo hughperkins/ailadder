@@ -40,7 +40,7 @@ else:
 
    if username != None and rolename != '' and username != None and rolename != '':
       account = accounthelper.getAccount(username)
-      account.roles.append( RoleMember( roles.getRole( rolename ) ) )
+      account.roles.append( roles.getRole( rolename ) )
       sqlalchemysetup.session.commit()
       jinjahelper.message( "Added ok" )
    else:

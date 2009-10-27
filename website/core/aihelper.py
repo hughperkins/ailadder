@@ -34,7 +34,7 @@ def getsupportedais( botrunnername ):
       return []
    supportedais = []
    for ai in botrunner.supportedais:
-      supportedais.append( [ ai.ai.ai_name, ai.ai.ai_version ] )
+      supportedais.append( [ ai.ai_name, ai.ai_version ] )
 
    return supportedais
 
@@ -62,11 +62,11 @@ def addaiifdoesntexist(ainame, aiversion):
 def setbotrunnersupportsthisai( botrunnername, ainame, aiversion ):
    botrunner = botrunnerhelper.getBotRunner( botrunnername )
    for ai in botrunner.supportedais:
-      if ai.ai.ai_name == ainame and ai.ai.ai_version == aiversion:
+      if ai.ai_name == ainame and ai.ai_version == aiversion:
        return (True,'')
 
    ai = getAI(ainame,aiversion)
-   botrunner.supportedais.append(BotRunnerSupportedAI(ai))
+   botrunner.supportedais.append(ai)
    sqlalchemysetup.session.commit()
    return (True,'')
 

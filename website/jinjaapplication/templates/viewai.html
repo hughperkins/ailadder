@@ -12,8 +12,8 @@
 
 {% for option in ai.allowedoptions %}
    <tr>
-   <td>{{option.option.option_name|e}}</td>
-   <td><a href='deleteoptionfromai.py?ainame={{ai.ai_name|e}}&aiversion={{ai.ai_version|e}}&aioption={{option.option.option_name|e}}'>Remove option</a></td>
+   <td>{{option.option_name|e}}</td>
+   <td><a href='deleteoptionfromai.py?ainame={{ai.ai_name|e}}&aiversion={{ai.ai_version|e}}&aioption={{option.option_name|e}}'>Remove option</a></td>
    </tr>
 {% endfor %}
 </table>

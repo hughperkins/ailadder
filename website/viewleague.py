@@ -27,6 +27,7 @@ from sqlalchemy.orm import join
 
 from utils import *
 from core import *
+from core.tableclasses import *
 
 sqlalchemysetup.setup()
 
@@ -34,15 +35,15 @@ loginhelper.processCookie()
 
 leaguename = formhelper.getValue('leaguename')
 
-compatibleoptions = listhelper.tuplelisttolist(
-   sqlalchemysetup.session.query( tableclasses.AIOption.option_name )
-      .select_from(join(join(tableclasses.AIOption,tableclasses.LeagueOption),tableclasses.League))
-      .filter(tableclasses.League.league_name == leaguename ) )
+league = leaguehelper.getLeague( leaguename )
+compatibleoptions = []
+for option in league.options:
+   compatibleoptions.append( option.option_name )
 
 showform = roles.isInRole(roles.leagueadmin)
 
 potentialoptions = listhelper.tuplelisttolist(
-   sqlalchemysetup.session.query(tableclasses.AIOption.option_name ) )
+   sqlalchemysetup.session.query(AIOption.option_name ) )
 for assignedoption in compatibleoptions:
    potentialoptions.remove(assignedoption)
 

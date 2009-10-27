@@ -47,10 +47,10 @@ else:
       ai = aihelper.getAI( ainame, aiversion )
       optiontoremove = None
       for option in ai.allowedoptions:
-         if option.option.option_name == aioption:
+         if option.option_name == aioption:
             optiontoremove = option
-      sqlalchemysetup.session.delete( optiontoremove )
-      sqlalchemysetup.session.commit()
+      ai.allowedoptions.remove( optiontoremove )
+      sqlalchemysetup.session.flush()
       jinjahelper.message( "Option removed ok" )
    else:
       jinjahelper.message( "Please fill in the fields and try again" )

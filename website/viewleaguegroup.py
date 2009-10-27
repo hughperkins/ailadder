@@ -39,7 +39,7 @@ showform = loginhelper.gusername != ''
 
 potentialleaguenames = listhelper.tuplelisttolist( sqlalchemysetup.session.query(League.league_name) )
 for league in leaguegroup.childleagues:
-   potentialleaguenames.remove( league.league.league_name )
+   potentialleaguenames.remove( league.league_name )
 
 jinjahelper.rendertemplate('viewleaguegroup.html', leaguegroupname = leaguegroupname, leaguegroup = leaguegroup, showform = showform, potentialleaguenames = potentialleaguenames )
 

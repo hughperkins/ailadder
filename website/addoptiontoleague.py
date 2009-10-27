@@ -44,7 +44,7 @@ else:
 
    if leaguename != None and aioption != None and leaguename != "" and aioption != "":
       league = leaguehelper.getLeague( leaguename )
-      league.options.append( LeagueOption( aihelper.getAIOption( aioption ) ) )
+      league.options.append( aihelper.getAIOption( aioption ) )
       sqlalchemysetup.session.commit()
       jinjahelper.message( "Added ok" )
    else:

@@ -54,17 +54,17 @@ def getsupportedmaps( botrunnername ):
       return []
    supportedmapnames = []
    for map in botrunner.supportedmaps:
-      supportedmapnames.append(map.map.map_name)
+      supportedmapnames.append(map.map_name)
    return supportedmapnames
 
 def setbotrunnersupportsthismap( botrunnername, mapname ):
    # Now, register the map as supported map
    botrunner = botrunnerhelper.getBotRunner( botrunnername )
    for map in botrunner.supportedmaps:
-      if map.map.map_name == mapname:
+      if map.map_name == mapname:
        return (True,'')
    map = getMap(mapname)
-   botrunner.supportedmaps.append(BotRunnerSupportedMap(map))
+   botrunner.supportedmaps.append(map)
    sqlalchemysetup.session.commit()
    return (True,'')
 
